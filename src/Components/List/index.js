@@ -2,28 +2,21 @@ import React, { useContext, useState } from "react";
 import { Pagination } from '@mantine/core';
 import { SettingContext } from "../../Context/Settings";
 
-const List = () => {
-  const { list, setList } = useContext(SettingContext);
-  const [activePage, setPage] = useState(0);
+const List = ({ list, toggleComplete }) => {
+  const { displayCount, showComplete, sort } = useContext(SettingContext);
+  const [activePage, setPage] = useState(1);
+  console.log(sort);
 
-  function toggleComplete(id) {
+  const listToRender = showComplete ? list : list.filter(item => !item.complete);
+  const listStart = displayCount * (activePage - 1);
+  const listEnd = listStart + displayCount;
+  const pageCount = Math.ceil(listToRender.length / displayCount);
 
-    const items = list.map(item => {
-      if (item.id === id) {
-        item.complete = !item.complete;
-      }
-
-      return item;
-    });
-
-    setList(items);
-
-  }
-
+  const displayList = listToRender.slice(listStart, listEnd);
 
   return (
     <>
-      {list.map(item => (
+      {displayList.map(item => (
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
@@ -33,15 +26,7 @@ const List = () => {
         </div>
       ))}
 
-      {/* <div key={list[activePage].id}>
-        <p>{list[activePage].text}</p>
-        <p><small>Assigned to: {list[activePage].assignee}</small></p>
-        <p><small>Difficulty: {list[activePage].difficulty}</small></p>
-        <div onClick={() => toggleComplete(list[activePage].id)}>Complete: {list[activePage].complete.toString()}</div>
-        <hr />
-      </div> */}
-
-      <Pagination page={activePage} onChange={setPage} total={list.length} />;
+      <Pagination page={activePage} onChange={setPage} total={pageCount} />
     </>
   );
 };

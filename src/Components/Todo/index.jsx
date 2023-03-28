@@ -1,26 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form';
 import { createStyles } from '@mantine/core';
-
+import { Grid } from '@mantine/core';
 import { v4 as uuid } from 'uuid';
-import { SettingContext } from '../../Context/Settings';
+
+import List from '../List';
 
 const useStyles = createStyles((theme) => ({
   h1: {
     backgroundColor: theme.colors.dark[6],
     color: theme.colors.gray[0],
+    width: '80%',
+    margin: 'auto',
+    fontSize: theme.fontSizes.lg,
+    padding: theme.spacing.md,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.md,
   }
 }));
 
 
 const Todo = () => {
-  const { displayCount, list, setList } = useContext(SettingContext);
+
   const { classes } = useStyles();
-  
+
   const [defaultValues] = useState({
     difficulty: 4,
   });
-  //const [list, setList] = useState([]);
+  const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
@@ -32,22 +39,22 @@ const Todo = () => {
   }
 
   function deleteItem(id) {
-    const items = list.filter( item => item.id !== id );
+    const items = list.filter(item => item.id !== id);
     setList(items);
   }
 
-  // function toggleComplete(id) {
+  function toggleComplete(id) {
 
-  //   const items = list.map( item => {
-  //     if ( item.id === id ) {
-  //       item.complete = ! item.complete;
-  //     }
-  //     return item;
-  //   });
+    const items = list.map(item => {
+      if (item.id === id) {
+        item.complete = !item.complete;
+      }
+      return item;
+    });
 
-  //   setList(items);
+    setList(items);
 
-  // }
+  }
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
@@ -56,7 +63,7 @@ const Todo = () => {
     // linter will want 'incomplete' added to dependency array unnecessarily. 
     // disable code used to avoid linter warning 
     // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [list]);  
+  }, [list]);
 
   return (
     <>
@@ -64,39 +71,40 @@ const Todo = () => {
         <h1 className={classes.h1} data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
       </header>
 
-      <form onSubmit={handleSubmit}>
 
-        <h2>Add To Do Item</h2>
+      <Grid>
+        <Grid.Col xs={12} sm={4}>
+          <form onSubmit={handleSubmit}>
 
-        <label>
-          <span>To Do Item</span>
-          <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
-        </label>
+            <h2>Add To Do Item</h2>
 
-        <label>
-          <span>Assigned To</span>
-          <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
-        </label>
+            <label>
+              <span>To Do Item</span>
+              <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
+            </label>
 
-        <label>
-          <span>Difficulty</span>
-          <input onChange={handleChange} defaultValue={defaultValues.difficulty} type="range" min={1} max={5} name="difficulty" />
-        </label>
+            <label>
+              <span>Assigned To</span>
+              <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
+            </label>
 
-        <label>
-          <button type="submit">Add Item</button>
-        </label>
-      </form>
+            <label>
+              <span>Difficulty</span>
+              <input onChange={handleChange} defaultValue={defaultValues.difficulty} type="range" min={1} max={5} name="difficulty" />
+            </label>
 
-      {/* {list.map(item => (
-        <div key={item.id}>
-          <p>{item.text}</p>
-          <p><small>Assigned to: {item.assignee}</small></p>
-          <p><small>Difficulty: {item.difficulty}</small></p>
-          <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
-          <hr />
-        </div>
-      ))} */}
+            <label>
+              <button type="submit">Add Item</button>
+            </label>
+          </form>
+        </Grid.Col>
+
+        <Grid.Col xs={12} sm={8}>
+          <List list={list} toggleComplete={toggleComplete} />
+        </Grid.Col>
+
+      </Grid>
+
 
     </>
   );

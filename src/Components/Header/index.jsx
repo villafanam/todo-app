@@ -1,10 +1,13 @@
-import { createStyles } from '@mantine/core';
+import { createStyles, Navbar, Text } from '@mantine/core';
 import React from 'react';
 
 const useStyles = createStyles((theme) => ({
-  h1: {
-    backgroundColor: theme.colors.blue[9],
+  navBar: {
+    backgroundColor: theme.colors.blue[6],
     color: theme.colors.gray[0],
+    height: '100%',
+    fontSize: theme.fontSizes.md,
+    padding: theme.spacing.sm,
   }
 }));
 
@@ -14,7 +17,10 @@ const Header = () => {
 
   return (
     <header>
-      <h1 className={classes.h1}>Home</h1>
+      {/* <h1 className={classes.h1}>Home</h1> */}
+      <Navbar className={classes.navBar} >
+        <Text>Home</Text>
+      </Navbar>
     </header>
   );
 };
