@@ -1,14 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useForm from '../../hooks/form';
+import { createStyles } from '@mantine/core';
 
 import { v4 as uuid } from 'uuid';
+import { SettingContext } from '../../Context/Settings';
+
+const useStyles = createStyles((theme) => ({
+  h1: {
+    backgroundColor: theme.colors.dark[6],
+    color: theme.colors.gray[0],
+  }
+}));
+
 
 const Todo = () => {
-
+  const { displayCount, list, setList } = useContext(SettingContext);
+  const { classes } = useStyles();
+  
   const [defaultValues] = useState({
     difficulty: 4,
   });
-  const [list, setList] = useState([]);
+  //const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
@@ -24,18 +36,18 @@ const Todo = () => {
     setList(items);
   }
 
-  function toggleComplete(id) {
+  // function toggleComplete(id) {
 
-    const items = list.map( item => {
-      if ( item.id === id ) {
-        item.complete = ! item.complete;
-      }
-      return item;
-    });
+  //   const items = list.map( item => {
+  //     if ( item.id === id ) {
+  //       item.complete = ! item.complete;
+  //     }
+  //     return item;
+  //   });
 
-    setList(items);
+  //   setList(items);
 
-  }
+  // }
 
   useEffect(() => {
     let incompleteCount = list.filter(item => !item.complete).length;
@@ -49,7 +61,7 @@ const Todo = () => {
   return (
     <>
       <header data-testid="todo-header">
-        <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
+        <h1 className={classes.h1} data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
       </header>
 
       <form onSubmit={handleSubmit}>
@@ -76,7 +88,7 @@ const Todo = () => {
         </label>
       </form>
 
-      {list.map(item => (
+      {/* {list.map(item => (
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
@@ -84,7 +96,7 @@ const Todo = () => {
           <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
           <hr />
         </div>
-      ))}
+      ))} */}
 
     </>
   );
