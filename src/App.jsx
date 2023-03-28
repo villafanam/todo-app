@@ -1,7 +1,7 @@
 import React from 'react';
+import Footer from './Components/Footer';
 
 import Header from './Components/Header';
-import List from './Components/List';
 import Todo from './Components/Todo';
 
 export default class App extends React.Component {
@@ -10,7 +10,7 @@ export default class App extends React.Component {
       <>
         <Header />
         <Todo />
-        <List />
+        <Footer />
       </>
     );
   }

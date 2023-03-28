@@ -10,9 +10,13 @@ const SettingProvider = ({ children }) => {
   const [displayCount, setDisplayCount] = useState(3);
   const [showComplete, setShowComplete] = useState('false');
   const [sort, setSort] = useState('difficulty');
-  const [list, setList] = useState([]);
+  //const [list, setList] = useState([]);
 
-  const values = {displayCount, showComplete, sort, list, setList};
+  const values = {
+    displayCount, 
+    showComplete, 
+    sort, 
+  };
 
   return (
     <SettingContext.Provider value={values}>
