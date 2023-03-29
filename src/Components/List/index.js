@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Pagination } from '@mantine/core';
+import { Pagination, Badge } from '@mantine/core';
 import { SettingContext } from "../../Context/Settings";
 
 const List = ({ list, toggleComplete }) => {
@@ -18,10 +18,18 @@ const List = ({ list, toggleComplete }) => {
     <>
       {displayList.map(item => (
         <div key={item.id}>
+          <Badge
+            onClick={() => toggleComplete(item.id)}
+            color={item.complete ? 'red' : 'green'}
+            variant="filled"
+          >
+            {item.complete ? 'Complete' : 'Pending'}
+          </Badge>
+
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
           <p><small>Difficulty: {item.difficulty}</small></p>
-          <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
+          <div >Complete: {item.complete.toString()}</div>
           <hr />
         </div>
       ))}
