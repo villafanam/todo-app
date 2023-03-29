@@ -8,7 +8,13 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors.gray[0],
     height: '100%',
     fontSize: theme.fontSizes.lg,
-    padding: '5px',
+    padding: theme.spacing.md,
+  },
+  link: {
+    textDecoration: 'none',
+    fontSize: theme.fontSizes.lg,
+    padding: theme.spacing.md,
+    color: theme.colors.gray[0],
   }
 }));
 
@@ -26,8 +32,8 @@ const Header = () => {
           direction="row"
           wrap="wrap"
         >
-          <NavLink  className={classes.navBar} to="/" style={{ textDecoration: 'none' }}>Home</NavLink>
-          <NavLink className={classes.navBar} to="settings" style={{ textDecoration: 'none' }}>Settings</NavLink>
+          <NavLink  className={classes.link} to="/" style={{ textDecoration: 'none' }}>Home</NavLink>
+          <NavLink className={classes.link} to="settings" style={{ textDecoration: 'none' }}>Settings</NavLink>
         </Flex>
       </Navbar>
     </header>

@@ -15,7 +15,8 @@ const SettingForm = ({ list, toggleComplete }) => {
     setSort,
   } = useContext(SettingContext);
 
-  const handleClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setShow(true);
     savePreferences();
   }
@@ -25,40 +26,49 @@ const SettingForm = ({ list, toggleComplete }) => {
 
       <h1 data-testid="settingForm-h1">Manage Settings</h1>
 
-      <Grid style={{width: '80%', margin: 'auto'}} gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
+      <Grid style={{ width: '80%', margin: 'auto' }} gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
         <Grid.Col span={5}>
-          <h2>Update Settings</h2>
 
-          <Switch
-            checked={showComplete}
-            onChange={(e) => { setShowComplete(e.currentTarget.checked) }}
-            label="Show Completed ToDo's"
-          />
+          <Card shadow="sm" padding="lg" radius="md" withBorder>
+            <Card.Section>
+              <Text m="xl" fontSize="xl" weight="bold" >Update Settings</Text>
+            </Card.Section>
 
-          <NumberInput
-            defaultValue={3}
-            placeholder="Items Per page"
-            label="Items Per page"
-            onChange={(e) => setDisplayCount(e)}
-          />
+            <form onSubmit={handleSubmit}>
+              <Switch
+                checked={showComplete}
+                onChange={(e) => setShowComplete(e.currentTarget.checked)}
+                label="Show Completed ToDo's"
+              />
 
-          <TextInput
-            placeholder="difficulty"
-            label="Sort Keyword"
-            onChange={(e) => setSort(e.target.value)}
-          />
+              <NumberInput
+                placeholder={displayCount}
+                label="Items Per Page"
+                onChange={(e) => setDisplayCount(e)}
+              />
 
-          <Button onClick={handleClick}> Show New Settings </Button>
+              <TextInput
+                placeholder="difficulty"
+                label="Sort Keyword"
+                onChange={(e) => setSort(e.target.value)}
+              />
+
+              <Button type="submit"> Show New Settings </Button>
+            </form>
+          </Card>
+
 
         </Grid.Col>
 
         <Grid.Col span={5}>
 
-
           <When condition={show}>
-            <h2>Update Settings</h2>
 
             <Card shadow="sm" padding="lg" radius="md" withBorder>
+              <Card.Section>
+                <Text m="xl" fontSize="xl" weight="bold" >Update Settings</Text>
+              </Card.Section>
+
               <Text size="lg" >
                 <When condition={showComplete}>
                   Show Completed ToDo's

@@ -14,13 +14,12 @@ const SettingProvider = ({ children }) => {
   
 
   const savePreferences = () => {
-
     localStorage.setItem('preferences', JSON.stringify({displayCount, showComplete, sort}));
   };
 
   useEffect(() => {
+    const localSettings = JSON.parse(localStorage.getItem('preferences'));
 
-    const localSettings = JSON.parse(localStorage.getItem('preferences'))
     if (localSettings) {
       setDisplayCount(localSettings.displayCount);
       setShowComplete(localSettings.showComplete);
