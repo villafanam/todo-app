@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 import Footer from './Components/Footer';
-import Header from './Components/Header';
-import RootLayout from './Components/layout/RootLayout';
+// import Header from './Components/Header';
+import RootLayout from './Components/Layout/RootLayout';
 import SettingForm from './Components/SettingForm';
 import Todo from './Components/Todo';
 
@@ -17,8 +17,8 @@ const router = createBrowserRouter(
   
 );
 
-export default class App extends React.Component {
-  render() {
+ const App = () => {
+  
     return (
       <>
         {/* <Header /> */}
@@ -28,5 +28,7 @@ export default class App extends React.Component {
         <Footer />
       </>
     );
-  }
+  
 }
+
+export default App;
