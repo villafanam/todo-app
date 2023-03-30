@@ -1,6 +1,7 @@
 import { createStyles, Flex, Navbar } from '@mantine/core';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Login from '../Login';
 
 const useStyles = createStyles((theme) => ({
   navBar: {
@@ -8,12 +9,12 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors.gray[0],
     height: '100%',
     fontSize: theme.fontSizes.lg,
-    padding: theme.spacing.md,
+    padding: theme.spacing.sm,
   },
   link: {
     textDecoration: 'none',
     fontSize: theme.fontSizes.lg,
-    padding: theme.spacing.md,
+    padding: theme.spacing.sm,
     color: theme.colors.gray[0],
   }
 }));
@@ -32,8 +33,9 @@ const Header = () => {
           direction="row"
           wrap="wrap"
         >
-          <NavLink  className={classes.link} to="/" style={{ textDecoration: 'none' }}>Home</NavLink>
+          <NavLink className={classes.link} to="/" style={{ textDecoration: 'none' }}>Home</NavLink>
           <NavLink className={classes.link} to="settings" style={{ textDecoration: 'none' }}>Settings</NavLink>
+          <Login />
         </Flex>
       </Navbar>
     </header>

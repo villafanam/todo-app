@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Grid, Switch, NumberInput, Button, TextInput, Card, Text } from '@mantine/core';
 import { SettingContext } from '../../Context/Settings/';
 import { When } from 'react-if';
+import { IconSettings } from '@tabler/icons-react';
 
 const SettingForm = ({ list, toggleComplete }) => {
   const [show, setShow] = useState(false);
@@ -24,7 +25,7 @@ const SettingForm = ({ list, toggleComplete }) => {
   return (
     <>
 
-      <h1 data-testid="settingForm-h1">Manage Settings</h1>
+      <h1 data-testid="settingForm-h1"><IconSettings /> Manage Settings</h1>
 
       <Grid style={{ width: '80%', margin: 'auto' }} gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
         <Grid.Col span={5}>
