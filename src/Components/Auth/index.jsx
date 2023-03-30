@@ -3,7 +3,7 @@ import {When} from 'react-if';
 
 import { LoginContext } from '../../Context/Auth';
 
-const Login =  ({capability, children}) => {
+const Auth =  ({capability, children}) => {
 
   //static contextType = LoginContext;
   const { loggedIn, can } = useContext(LoginContext);
@@ -20,4 +20,4 @@ const Login =  ({capability, children}) => {
   
 }
 
-export default Login;
+export default Auth;
