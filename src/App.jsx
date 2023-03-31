@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 import Footer from './Components/Footer';
@@ -6,29 +6,40 @@ import Footer from './Components/Footer';
 import RootLayout from './Components/Layout/RootLayout';
 import SettingForm from './Components/SettingForm';
 import Todo from './Components/Todo';
+import { When } from 'react-if';
+import { AuthContext } from './Context/Auth';
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout/>}>
-      <Route index element={<Todo />} />
-      <Route path="settings" element={<SettingForm />} />
-    </Route>
-  )
-  
-);
 
- const App = () => {
-  
-    return (
-      <>
-        {/* <Header /> */}
-        {/* <Todo />
+
+const App = () => {
+  const { loggedIn } = useContext(AuthContext);
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+        {
+          loggedIn &&
+          <>
+            <Route index element={<Todo />} />
+            <Route path="settings" element={<SettingForm />} />
+          </>
+        }
+      </Route>
+    )
+
+  );
+
+  return (
+    <>
+      {/* <Header /> */}
+      {/* <Todo />
         <SettingForm /> */}
-        <RouterProvider router={router} />
-        <Footer />
-      </>
-    );
-  
+
+      <RouterProvider router={router} />
+      <Footer />
+    </>
+  );
+
 }
 
 export default App;

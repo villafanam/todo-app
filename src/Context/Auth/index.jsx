@@ -23,9 +23,9 @@ const testUsers = {
 
 }
 
-export const LoginContext = React.createContext();
+export const AuthContext = React.createContext();
 
-const LoginProvider = ({ children }) => {
+const AuthProvider = ({ children }) => {
 
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -95,11 +95,11 @@ const LoginProvider = ({ children }) => {
 
 
   return (
-    <LoginContext.Provider value={values}>
+    <AuthContext.Provider value={values}>
       {children}
-    </LoginContext.Provider>
+    </AuthContext.Provider>
   );
 
 }
 
-export default LoginProvider;
+export default AuthProvider;
