@@ -3,8 +3,24 @@ import { Grid, Switch, NumberInput, Button, TextInput, Card, Text } from '@manti
 import { SettingContext } from '../../Context/Settings/';
 import { When } from 'react-if';
 import { IconSettings } from '@tabler/icons-react';
+import { createStyles } from '@mantine/core';
+
+
+const useStyles = createStyles((theme) => ({
+  h1: {
+    backgroundColor: theme.colors.gray[8],
+    color: theme.colors.gray[0],
+    width: '80%',
+    margin: 'auto',
+    fontSize: theme.fontSizes.lg,
+    padding: theme.spacing.md,
+    marginTop: theme.spacing.md,
+    marginBottom: theme.spacing.md,
+  }
+}));
 
 const SettingForm = ({ list, toggleComplete }) => {
+  const { classes } = useStyles();
   const [show, setShow] = useState(false);
   const {
     displayCount,
@@ -25,7 +41,7 @@ const SettingForm = ({ list, toggleComplete }) => {
   return (
     <>
 
-      <h1 data-testid="settingForm-h1"><IconSettings /> Manage Settings</h1>
+      <h1 className={classes.h1} data-testid="settingForm-h1"><IconSettings /> Manage Settings</h1>
 
       <Grid style={{ width: '80%', margin: 'auto' }} gutter={5} gutterXs="md" gutterMd="xl" gutterXl={50}>
         <Grid.Col span={5}>
@@ -36,6 +52,7 @@ const SettingForm = ({ list, toggleComplete }) => {
             </Card.Section>
 
             <form onSubmit={handleSubmit}>
+            {/* <Text m="xl" fontSize="xl" weight="bold" >Update Settings</Text> */}
               <Switch
                 checked={showComplete}
                 onChange={(e) => setShowComplete(e.currentTarget.checked)}
@@ -45,16 +62,16 @@ const SettingForm = ({ list, toggleComplete }) => {
               <NumberInput
                 placeholder={displayCount}
                 label="Items Per Page"
-                onChange={(e) => setDisplayCount(e)}
+                onChange={(value) => setDisplayCount(value)}
               />
 
               <TextInput
-                placeholder="difficulty"
+                placeholder={sort}
                 label="Sort Keyword"
                 onChange={(e) => setSort(e.target.value)}
               />
 
-              <Button type="submit"> Show New Settings </Button>
+              <Button m="sm" type="submit"> Show New Settings </Button>
             </form>
           </Card>
 
@@ -64,22 +81,21 @@ const SettingForm = ({ list, toggleComplete }) => {
         <Grid.Col span={5}>
 
           <When condition={show}>
-
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
                 <Text m="xl" fontSize="xl" weight="bold" >Update Settings</Text>
               </Card.Section>
 
-              <Text size="lg" >
+              <Text m="sm" >
                 <When condition={showComplete}>
                   Show Completed ToDo's
                 </When>
               </Text>
-              <Text size="lg" >Items Per Page: {displayCount}</Text>
-              <Text size="lg" >Sort Keyword: {sort}</Text>
+              <Text m="sm" >Items Per Page: {displayCount}</Text>
+              <Text m="sm">Sort Keyword: {sort}</Text>
             </Card>
-
           </When>
+
         </Grid.Col>
 
       </Grid>
