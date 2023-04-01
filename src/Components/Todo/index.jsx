@@ -3,6 +3,8 @@ import useForm from '../../hooks/form';
 import { Card, TextInput, Text, createStyles, Slider, Button } from '@mantine/core';
 import { Grid } from '@mantine/core';
 import { v4 as uuid } from 'uuid';
+import axios from 'axios';
+
 import List from '../List';
 import Auth from '../Auth';
 
@@ -31,27 +33,53 @@ const Todo = () => {
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  function addItem(item) {
-    item.id = uuid();
+  async function addItem(item) {
+    //item.id = uuid();
     item.complete = false;
-    console.log(item);
-    setList([...list, item]);
+    // console.log(item);
+    
+    let config = {
+      method: 'post',
+      baseURL: 'https://api-js401.herokuapp.com',
+      url: '/api/v1/todo',
+      data: item,
+    };
+    let response = await axios(config);
+    //console.log('dbData----',response.data)
+    setList([...list, response.data]);
   }
 
-  function deleteItem(id) {
-    const items = list.filter(item => item.id !== id);
+  async function deleteItem(id) {
+    const items = list.filter(item => item._id !== id);
     setList(items);
+
+    let config = {
+      method: 'delete',
+      baseURL: 'https://api-js401.herokuapp.com',
+      url: `/api/v1/todo/${id}`,
+    };
+    let response = await axios(config);
   }
 
-  function toggleComplete(id) {
+  async function toggleComplete(id) {
 
     const items = list.map(item => {
-      if (item.id === id) {
+      if (item._id === id) {
         item.complete = !item.complete;
       }
       return item;
     });
 
+    let updateItem = list.filter((item) => item._id === id)[0];
+
+    let config = {
+      method: 'put',
+      baseURL: 'https://api-js401.herokuapp.com',
+      url: `/api/v1/todo/${id}`,
+      data: updateItem,
+    };
+    
+    let response = await axios(config);
     setList(items);
 
   }
@@ -64,6 +92,21 @@ const Todo = () => {
     // disable code used to avoid linter warning 
     // eslint-disable-next-line react-hooks/exhaustive-deps 
   }, [list]);
+
+  const fetchData = async () => {
+    let config = {
+      method: 'get',
+      baseURL: 'https://api-js401.herokuapp.com',
+      url: '/api/v1/todo',
+    };
+    let response = await axios(config);
+    console.log('data:-----',response.data.results);
+    setList(response.data.results); 
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>

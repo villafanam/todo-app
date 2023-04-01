@@ -22,14 +22,14 @@ const List = ({ list, toggleComplete, deleteItem }) => {
   return (
     <>
       {displayList.map(item => (
-        <Card withBorder shadow="md" key={item.id} mb="sm">
+        <Card withBorder shadow="md" key={item._id} mb="sm">
           <Card.Section withBorder>
             <Group position="apart">
               <Group>
                 <If condition={loggedIn && can('update')}>
                   <Then>
                     <Badge
-                      onClick={() => toggleComplete(item.id)}
+                      onClick={() => toggleComplete(item._id)}
                       color={item.complete ? 'red' : 'green'}
                       variant="filled"
                       m="3px"
@@ -52,7 +52,7 @@ const List = ({ list, toggleComplete, deleteItem }) => {
               </Group>
 
               <Auth capability="delete">
-                <CloseButton onClick={() => deleteItem(item.id)} title="Close Todo Item" />
+                <CloseButton onClick={() => deleteItem(item._id)} title="Close Todo Item" />
               </Auth>
 
             </Group>
